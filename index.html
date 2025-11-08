@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Grow My Plant – Focus Timer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="background-orbs">
+    <span class="orb orb-one"></span>
+    <span class="orb orb-two"></span>
+    <span class="orb orb-three"></span>
+  </div>
+  <main class="app-shell">
+    <header class="top-bar">
+      <h1>Grow My Plant – Focus Timer</h1>
+      <nav class="tab-nav" aria-label="Primary">
+        <button class="tab-btn active" data-tab="focus" id="tabBtnFocus" aria-controls="tab-focus">
+          <span class="tab-icon" aria-hidden="true">🌿</span>
+          <span class="tab-label">Focus</span>
+        </button>
+        <button class="tab-btn" data-tab="sounds" id="tabBtnSounds" aria-controls="tab-sounds">
+          <span class="tab-icon" aria-hidden="true">🎧</span>
+          <span class="tab-label">Sounds</span>
+        </button>
+        <button class="tab-btn" data-tab="settings" id="tabBtnSettings" aria-controls="tab-settings">
+          <span class="tab-icon" aria-hidden="true">⚙️</span>
+          <span class="tab-label">Settings</span>
+        </button>
+      </nav>
+    </header>
+
+    <section id="tab-focus" class="tab-panel active" role="tabpanel" aria-labelledby="tabBtnFocus">
+      <article class="focus-hero glass-card">
+        <header class="focus-header">
+          <h2>Go back to your work!</h2>
+          <p>Each focused minute nourishes your plant.</p>
+        </header>
+
+        <div class="plant-center" aria-live="polite">
+          <div class="plant-circle">
+            <div class="plant-illustration" id="plantIllustration" role="img" aria-label="Plant growth stage"></div>
+          </div>
+        </div>
+
+        <div class="timer-stack">
+          <div class="timer-meta">
+            <span class="mode-pill" id="modeLabel">Focus</span>
+            <span class="session-info" id="sessionInfo">Session 1 of 4</span>
+          </div>
+          <div class="timer-display" id="timerDisplay">00:00</div>
+          <p class="timer-goal">Goal <span id="goalDuration">25:00</span></p>
+          <div class="timer-controls">
+            <button class="control-btn" id="playPauseBtn" aria-label="Play or pause timer">▶️</button>
+            <button class="control-btn" id="resetBtn" aria-label="Reset timer">🔄</button>
+            <button class="control-btn" id="skipBtn" aria-label="Skip to next session">⏭️</button>
+            <button class="control-btn" id="soundToggleBtn" aria-label="Toggle focus sounds">🔈</button>
+          </div>
+          <div class="session-progress" aria-hidden="true">
+            <span class="session-dot" data-session="1"></span>
+            <span class="session-dot" data-session="2"></span>
+            <span class="session-dot" data-session="3"></span>
+            <span class="session-dot" data-session="4"></span>
+          </div>
+          <div class="toast" id="toast" role="status" aria-live="polite"></div>
+        </div>
+      </article>
+    </section>
+
+    <section id="tab-sounds" class="tab-panel" role="tabpanel" aria-labelledby="tabBtnSounds">
+      <div class="sounds-grid">
+        <article class="sound-card glass-card" data-sound="brown-noise">
+          <div class="sound-meta">
+            <span class="sound-chip">Noise</span>
+            <h3>Brown Noise</h3>
+            <p>Loop</p>
+          </div>
+          <button class="sound-toggle" aria-label="Toggle Brown Noise">Play</button>
+          <audio loop src="assets/brown-noise.mp3"></audio>
+        </article>
+        <article class="sound-card glass-card" data-sound="white-noise">
+          <div class="sound-meta">
+            <span class="sound-chip">Noise</span>
+            <h3>White Noise</h3>
+            <p>Loop</p>
+          </div>
+          <button class="sound-toggle" aria-label="Toggle White Noise">Play</button>
+          <audio loop src="assets/white-noise.mp3"></audio>
+        </article>
+        <article class="sound-card glass-card" data-sound="forest">
+          <div class="sound-meta">
+            <span class="sound-chip">Nature</span>
+            <h3>Forest</h3>
+            <p>Loop</p>
+          </div>
+          <button class="sound-toggle" aria-label="Toggle Forest Sounds">Play</button>
+          <audio loop src="assets/forest.mp3"></audio>
+        </article>
+        <article class="sound-card glass-card" data-sound="ocean">
+          <div class="sound-meta">
+            <span class="sound-chip">Nature</span>
+            <h3>Ocean</h3>
+            <p>Loop</p>
+          </div>
+          <button class="sound-toggle" aria-label="Toggle Ocean Sounds">Play</button>
+          <audio loop src="assets/ocean.mp3"></audio>
+        </article>
+        <article class="sound-card glass-card" data-sound="river">
+          <div class="sound-meta">
+            <span class="sound-chip">Nature</span>
+            <h3>River</h3>
+            <p>Loop</p>
+          </div>
+          <button class="sound-toggle" aria-label="Toggle River Sounds">Play</button>
+          <audio loop src="assets/river.mp3"></audio>
+        </article>
+        <article class="sound-card glass-card" data-sound="winds">
+          <div class="sound-meta">
+            <span class="sound-chip">Nature</span>
+            <h3>Winds</h3>
+            <p>Loop</p>
+          </div>
+          <button class="sound-toggle" aria-label="Toggle Wind Sounds">Play</button>
+          <audio loop src="assets/winds.mp3"></audio>
+        </article>
+      </div>
+    </section>
+
+    <section id="tab-settings" class="tab-panel" role="tabpanel" aria-labelledby="tabBtnSettings">
+      <div class="settings-grid">
+        <form id="settingsForm" class="settings-form glass-card" novalidate>
+          <h2>Customize your routine</h2>
+          <div class="form-group">
+            <label for="focusDuration">Focus Duration (minutes)</label>
+            <input type="number" id="focusDuration" name="focus" min="15" max="30" required />
+            <p class="helper-text" id="focusHelper"></p>
+          </div>
+          <div class="form-group">
+            <label for="shortBreakDuration">Short Break (minutes)</label>
+            <input type="number" id="shortBreakDuration" name="shortBreak" min="5" max="10" required />
+            <p class="helper-text" id="shortHelper"></p>
+          </div>
+          <div class="form-group">
+            <label for="longBreakDuration">Long Break (minutes)</label>
+            <input type="number" id="longBreakDuration" name="longBreak" min="15" max="20" required />
+            <p class="helper-text" id="longHelper"></p>
+          </div>
+          <button type="submit" class="primary-btn">Save Settings</button>
+        </form>
+        <aside class="settings-summary glass-card" id="settingsSummary">
+          <h3>Active Settings</h3>
+          <ul>
+            <li><strong>Focus:</strong> <span data-setting="focus">25</span> min</li>
+            <li><strong>Short Break:</strong> <span data-setting="shortBreak">5</span> min</li>
+            <li><strong>Long Break:</strong> <span data-setting="longBreak">15</span> min</li>
+          </ul>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <div class="plant-stages" aria-hidden="true">
+    <svg width="0" height="0" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="potGradient" x1="0" x2="0" y1="0" y2="1">
+          <stop offset="0%" stop-color="#8c6239" />
+          <stop offset="100%" stop-color="#5e3a18" />
+        </linearGradient>
+        <linearGradient id="leafGradient" x1="0" x2="1" y1="0" y2="1">
+          <stop offset="0%" stop-color="#6ee7b7" />
+          <stop offset="100%" stop-color="#34d399" />
+        </linearGradient>
+        <linearGradient id="flowerGradient" x1="0" x2="1" y1="0" y2="1">
+          <stop offset="0%" stop-color="#fcd34d" />
+          <stop offset="100%" stop-color="#f472b6" />
+        </linearGradient>
+      </defs>
+    </svg>
+
+    <svg id="plantStage0" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+      <rect x="60" y="140" width="80" height="30" rx="12" fill="url(#potGradient)" />
+      <rect x="55" y="120" width="90" height="20" rx="10" fill="#a0744f" />
+    </svg>
+
+    <svg id="plantStage1" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+      <rect x="60" y="140" width="80" height="30" rx="12" fill="url(#potGradient)" />
+      <rect x="55" y="120" width="90" height="20" rx="10" fill="#a0744f" />
+      <path d="M100 140 Q103 110 100 90" stroke="#2f855a" stroke-width="6" fill="none" stroke-linecap="round" />
+    </svg>
+
+    <svg id="plantStage2" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+      <rect x="60" y="140" width="80" height="30" rx="12" fill="url(#potGradient)" />
+      <rect x="55" y="120" width="90" height="20" rx="10" fill="#a0744f" />
+      <path d="M100 140 Q103 110 100 90" stroke="#2f855a" stroke-width="6" fill="none" stroke-linecap="round" />
+      <path d="M100 115 Q80 105 70 90" fill="#34d399" />
+      <path d="M100 115 Q120 105 130 90" fill="#38b2ac" />
+    </svg>
+
+    <svg id="plantStage3" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+      <rect x="60" y="140" width="80" height="30" rx="12" fill="url(#potGradient)" />
+      <rect x="55" y="120" width="90" height="20" rx="10" fill="#a0744f" />
+      <path d="M100 140 Q103 110 100 90" stroke="#2f855a" stroke-width="6" fill="none" stroke-linecap="round" />
+      <path d="M100 115 Q80 105 70 90" fill="#34d399" />
+      <path d="M100 115 Q120 105 130 90" fill="#38b2ac" />
+      <path d="M100 105 Q75 90 68 70" fill="#68d391" />
+      <path d="M100 105 Q125 90 132 70" fill="#48bb78" />
+      <circle cx="80" cy="80" r="12" fill="url(#leafGradient)" />
+      <circle cx="120" cy="80" r="12" fill="url(#leafGradient)" />
+    </svg>
+
+    <svg id="plantStage4" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+      <rect x="60" y="140" width="80" height="30" rx="12" fill="url(#potGradient)" />
+      <rect x="55" y="120" width="90" height="20" rx="10" fill="#a0744f" />
+      <path d="M100 140 Q103 110 100 90" stroke="#2f855a" stroke-width="6" fill="none" stroke-linecap="round" />
+      <path d="M100 115 Q80 105 70 90" fill="#34d399" />
+      <path d="M100 115 Q120 105 130 90" fill="#38b2ac" />
+      <path d="M100 105 Q75 90 68 70" fill="#68d391" />
+      <path d="M100 105 Q125 90 132 70" fill="#48bb78" />
+      <circle cx="80" cy="80" r="12" fill="url(#leafGradient)" />
+      <circle cx="120" cy="80" r="12" fill="url(#leafGradient)" />
+      <circle cx="100" cy="70" r="16" fill="url(#flowerGradient)" />
+      <path d="M100 90 Q90 80 80 60" stroke="#2f855a" stroke-width="4" fill="none" stroke-linecap="round" />
+      <path d="M100 90 Q110 80 120 60" stroke="#2f855a" stroke-width="4" fill="none" stroke-linecap="round" />
+      <circle cx="85" cy="60" r="8" fill="#f87171" />
+      <circle cx="115" cy="60" r="8" fill="#fbbf24" />
+    </svg>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
