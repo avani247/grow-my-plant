@@ -8,15 +8,13 @@ let userSettings = { ...DEFAULT_SETTINGS };
 let currentMode = 'focus';
 let focusCount = 0;
 let isRunning = false;
-let elapsedSeconds = 0;
-let targetSeconds = userSettings.focus * 60;
+let timerSeconds = userSettings.focus * 60;
 let intervalId = null;
 let soundEnabled = true;
 
 const timerDisplay = document.getElementById('timerDisplay');
 const modeLabel = document.getElementById('modeLabel');
 const sessionInfo = document.getElementById('sessionInfo');
-const goalDuration = document.getElementById('goalDuration');
 const playPauseBtn = document.getElementById('playPauseBtn');
 const resetBtn = document.getElementById('resetBtn');
 const skipBtn = document.getElementById('skipBtn');
@@ -104,9 +102,7 @@ function formatTime(seconds) {
 }
 
 function updateTimerDisplay() {
-  const displaySeconds = Math.min(elapsedSeconds, targetSeconds);
-  timerDisplay.textContent = formatTime(displaySeconds);
-  goalDuration.textContent = formatTime(targetSeconds);
+  timerDisplay.textContent = formatTime(timerSeconds);
   const sessionNumber = Math.min(focusCount + (currentMode === 'focus' ? 1 : 0), 4) || 1;
   sessionInfo.textContent = `Session ${sessionNumber} of 4`;
   modeLabel.textContent = currentMode === 'focus' ? 'Focus' : currentMode === 'shortBreak' ? 'Short Break' : 'Long Break';
@@ -126,25 +122,16 @@ function renderPlant() {
   plantIllustration.appendChild(stage.cloneNode(true));
 }
 
-function getDurationForMode(mode) {
-  if (mode === 'focus') return userSettings.focus * 60;
-  if (mode === 'shortBreak') return userSettings.shortBreak * 60;
-  return userSettings.longBreak * 60;
-}
-
-function applyModeDuration({ resetElapsed = true } = {}) {
-  targetSeconds = getDurationForMode(currentMode);
-  if (resetElapsed) {
-    elapsedSeconds = 0;
-  } else if (elapsedSeconds > targetSeconds) {
-    elapsedSeconds = targetSeconds;
-  }
+function setTimer(seconds) {
+  timerSeconds = seconds;
   updateTimerDisplay();
 }
 
 function switchMode(nextMode) {
   currentMode = nextMode;
-  applyModeDuration({ resetElapsed: true });
+  const duration = userSettings[currentMode === 'focus' ? 'focus' : currentMode === 'shortBreak' ? 'shortBreak' : 'longBreak'];
+  setTimer(duration * 60);
+  updateTimerDisplay();
 }
 
 function growPlantToast() {
@@ -172,7 +159,7 @@ function handleSessionComplete({ manual = false } = {}) {
     const shouldLongBreak = !manual && focusCount >= 4;
     switchMode(shouldLongBreak ? 'longBreak' : 'shortBreak');
   } else {
-    if (currentMode === 'longBreak' && !manual) {
+    if (currentMode === 'longBreak') {
       resetPlant();
     }
     switchMode('focus');
@@ -186,10 +173,10 @@ function handleSessionComplete({ manual = false } = {}) {
 }
 
 function tick() {
-  elapsedSeconds += 1;
-  updateTimerDisplay();
-
-  if (elapsedSeconds >= targetSeconds) {
+  if (timerSeconds > 0) {
+    timerSeconds -= 1;
+    updateTimerDisplay();
+  } else {
     clearInterval(intervalId);
     intervalId = null;
     isRunning = false;
@@ -198,11 +185,6 @@ function tick() {
 }
 
 function startTimer() {
-  if (elapsedSeconds >= targetSeconds) {
-    elapsedSeconds = 0;
-    updateTimerDisplay();
-  }
-
   if (intervalId) clearInterval(intervalId);
   intervalId = setInterval(tick, 1000);
   isRunning = true;
@@ -226,12 +208,17 @@ function toggleTimer() {
 
 function resetTimer() {
   pauseTimer();
-  applyModeDuration({ resetElapsed: true });
+  const duration = userSettings[currentMode === 'focus' ? 'focus' : currentMode === 'shortBreak' ? 'shortBreak' : 'longBreak'];
+  setTimer(duration * 60);
 }
 
 function skipSession() {
   pauseTimer();
-  handleSessionComplete({ manual: true });
+  if (currentMode === 'focus') {
+    handleSessionComplete({ manual: true });
+  } else {
+    handleSessionComplete({ manual: true });
+  }
 }
 
 function toggleSounds() {
@@ -321,9 +308,9 @@ function initForm() {
     persistSettings();
     updateSettingsForm();
 
-    if (!isRunning && elapsedSeconds === 0) {
-      applyModeDuration({ resetElapsed: true });
-    } else {
+    if (!isRunning) {
+      switchMode(currentMode);
+      pauseTimer();
       updateTimerDisplay();
     }
   });

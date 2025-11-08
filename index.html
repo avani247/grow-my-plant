@@ -19,41 +19,30 @@
     <header class="top-bar">
       <h1>Grow My Plant – Focus Timer</h1>
       <nav class="tab-nav" aria-label="Primary">
-        <button class="tab-btn active" data-tab="focus" id="tabBtnFocus" aria-controls="tab-focus">
-          <span class="tab-icon" aria-hidden="true">🌿</span>
-          <span class="tab-label">Focus</span>
-        </button>
-        <button class="tab-btn" data-tab="sounds" id="tabBtnSounds" aria-controls="tab-sounds">
-          <span class="tab-icon" aria-hidden="true">🎧</span>
-          <span class="tab-label">Sounds</span>
-        </button>
-        <button class="tab-btn" data-tab="settings" id="tabBtnSettings" aria-controls="tab-settings">
-          <span class="tab-icon" aria-hidden="true">⚙️</span>
-          <span class="tab-label">Settings</span>
-        </button>
+        <button class="tab-btn active" data-tab="focus" aria-controls="tab-focus">Focus</button>
+        <button class="tab-btn" data-tab="sounds" aria-controls="tab-sounds">Sounds</button>
+        <button class="tab-btn" data-tab="settings" aria-controls="tab-settings">Settings</button>
       </nav>
     </header>
 
-    <section id="tab-focus" class="tab-panel active" role="tabpanel" aria-labelledby="tabBtnFocus">
-      <article class="focus-hero glass-card">
-        <header class="focus-header">
-          <h2>Go back to your work!</h2>
-          <p>Each focused minute nourishes your plant.</p>
-        </header>
-
-        <div class="plant-center" aria-live="polite">
-          <div class="plant-circle">
+    <section id="tab-focus" class="tab-panel active" role="tabpanel" aria-labelledby="focus">
+      <div class="focus-grid">
+        <article class="plant-card glass-card">
+          <header class="plant-header">
+            <h2>Your Plant</h2>
+            <p class="plant-subtitle">Nurture it with mindful focus sessions.</p>
+          </header>
+          <div class="plant-stage" aria-live="polite">
             <div class="plant-illustration" id="plantIllustration" role="img" aria-label="Plant growth stage"></div>
           </div>
-        </div>
+        </article>
 
-        <div class="timer-stack">
+        <article class="timer-card glass-card">
           <div class="timer-meta">
             <span class="mode-pill" id="modeLabel">Focus</span>
             <span class="session-info" id="sessionInfo">Session 1 of 4</span>
           </div>
-          <div class="timer-display" id="timerDisplay">00:00</div>
-          <p class="timer-goal">Goal <span id="goalDuration">25:00</span></p>
+          <div class="timer-display" id="timerDisplay">25:00</div>
           <div class="timer-controls">
             <button class="control-btn" id="playPauseBtn" aria-label="Play or pause timer">▶️</button>
             <button class="control-btn" id="resetBtn" aria-label="Reset timer">🔄</button>
@@ -67,11 +56,11 @@
             <span class="session-dot" data-session="4"></span>
           </div>
           <div class="toast" id="toast" role="status" aria-live="polite"></div>
-        </div>
-      </article>
+        </article>
+      </div>
     </section>
 
-    <section id="tab-sounds" class="tab-panel" role="tabpanel" aria-labelledby="tabBtnSounds">
+    <section id="tab-sounds" class="tab-panel" role="tabpanel" aria-labelledby="sounds">
       <div class="sounds-grid">
         <article class="sound-card glass-card" data-sound="brown-noise">
           <div class="sound-meta">
@@ -130,7 +119,7 @@
       </div>
     </section>
 
-    <section id="tab-settings" class="tab-panel" role="tabpanel" aria-labelledby="tabBtnSettings">
+    <section id="tab-settings" class="tab-panel" role="tabpanel" aria-labelledby="settings">
       <div class="settings-grid">
         <form id="settingsForm" class="settings-form glass-card" novalidate>
           <h2>Customize your routine</h2>
